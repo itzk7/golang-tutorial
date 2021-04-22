@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -48,4 +50,15 @@ func readDeckFromFile(filename string) deck {
 	return deck(strings.Split(string(bs), ","))
 }
 
-func 
+func (deck d) shuffle() {
+	// Normal rand.Intn() always returns same set of integer for every execution
+
+	// using source we can overcome the above scenario by passing the seed
+	// https://gobyexample.com/random-numbers
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source);
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newnewPosition] = d[newPosition], d[i]
+	}
+}
